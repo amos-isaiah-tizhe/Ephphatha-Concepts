@@ -1,0 +1,11 @@
+<header class="site-header">
+  <div class="header-top">
+    <div class="container header-top__inner">
+      <a class="header-top__contact" href="tel:+<%= site.contact.phone %>">Call: +<%= site.contact.phone %></a>
+      <a class="header-top__contact" href="mailto:<%= site.contact.email %>"><%= site.contact.email %></a>
+      <span class="header-top__contact">CAC Reg. No: <%= site.contact.cac.regNo %></span>
+    </div>
+  </div>
+
+  <%- include('navbar') %>
+</header>

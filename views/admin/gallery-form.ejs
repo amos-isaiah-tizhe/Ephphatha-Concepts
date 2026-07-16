@@ -1,0 +1,117 @@
+<%- include('./_shell-start') %>
+
+<div class="admin-shell">
+  <%- include('_sidebar') %>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1><%= item ? 'Edit Gallery Item' : 'Add Gallery Item' %></h1>
+    </div>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="form-success-banner" style="background:#fdecec;border-color:#a33d2f;color:#a33d2f;"><%= error %></div>
+    <% } %>
+
+    <% if (item && item.images && item.images.length > 0) { %>
+      <!--
+        IMPORTANT: this block sits OUTSIDE the main "Save Gallery Item" form
+        below on purpose. HTML does not support nested form elements —
+        browsers silently ignore a nested form's start tag when one is
+        encountered while already inside a form, which means any Replace or
+        Remove forms placed inside the main form would actually submit AS
+        the main form, merging file fields together and tripping Multer's
+        "Unexpected field" error. Keeping these as sibling, standalone forms
+        avoids that entirely.
+      -->
+      <div class="admin-form" style="margin-bottom:var(--space-4);">
+        <label style="font-weight:600;font-size:var(--fs-small);">Current Images</label>
+        <p style="font-size:var(--fs-tiny);color:var(--color-slate);margin-top:4px;">
+          To swap a photo, use "Replace" — it uploads the new image and removes the old one in one step.
+          "Remove" only works when the item has more than one image (every item must keep at least one).
+        </p>
+        <div class="admin-form__images">
+          <% item.images.forEach(function(img) { %>
+            <div>
+              <img src="<%= img.url %>" alt="<%= img.altText %>">
+
+              <form
+                action="/admin/gallery/<%= item._id %>/images/<%= encodeURIComponent(img.publicId) %>/replace?_csrf=<%= encodeURIComponent(csrfToken) %>"
+                method="POST"
+                enctype="multipart/form-data"
+                style="margin-top:6px;"
+              >
+                <input type="file" name="replacementImage" accept="image/png,image/jpeg,image/webp,image/avif" required style="font-size:11px;width:80px;">
+                <button type="submit" class="btn btn--sm btn--outline" style="margin-top:4px;">Replace</button>
+              </form>
+
+              <form action="/admin/gallery/<%= item._id %>/images/<%= encodeURIComponent(img.publicId) %>/delete" method="POST" data-confirm="Remove this image?" style="margin-top:6px;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn--sm" style="background:#fdecec;color:#a33d2f;">Remove</button>
+              </form>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    <% } %>
+
+    <form class="admin-form" action="<%= (item ? '/admin/gallery/' + item._id : '/admin/gallery') %>?_csrf=<%= encodeURIComponent(csrfToken) %>" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input class="form-control" type="text" id="title" name="title" required maxlength="120" value="<%= item ? item.title : '' %>">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="serviceCategory">Service Category</label>
+          <select class="form-control" id="serviceCategory" name="serviceCategory" required>
+            <% Object.values(SERVICE_META).forEach(function(m) { %>
+              <option value="<%= m.key %>" <%= item && item.serviceCategory === m.key ? 'selected' : '' %>><%= m.label %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="subCategory">Sub-category</label>
+          <input class="form-control" type="text" id="subCategory" name="subCategory" maxlength="120" value="<%= item ? (item.subCategory || '') : '' %>" placeholder="e.g. Roofing Services">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" required maxlength="2000"><%= item ? item.description : '' %></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="priceRange">Price / Quote note</label>
+          <input class="form-control" type="text" id="priceRange" name="priceRange" maxlength="60" value="<%= item ? (item.priceRange || '') : '' %>" placeholder="e.g. Request Quote">
+        </div>
+        <div class="form-group">
+          <label for="tags">Tags (comma-separated)</label>
+          <input class="form-control" type="text" id="tags" name="tags" value="<%= item && item.tags ? item.tags.join(', ') : '' %>">
+        </div>
+      </div>
+
+      <% if (item) { %>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="isPublished" <%= item.isPublished ? 'checked' : '' %>> Published (visible on the public site)
+          </label>
+        </div>
+      <% } %>
+
+      <div class="form-group">
+        <label for="images">
+          <%= item ? 'Add more images (optional)' : 'Images (required — first image becomes the cover)' %>
+        </label>
+        <input class="form-control" type="file" id="images" name="images" accept="image/png,image/jpeg,image/webp,image/avif" multiple data-image-input <%= item ? '' : 'required' %>>
+        <div class="admin-form__images" data-image-preview></div>
+      </div>
+
+      <button type="submit" class="btn btn--primary">Save Gallery Item</button>
+    </form>
+  </main>
+</div>
+
+<%- include('./_shell-end') %>

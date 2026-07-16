@@ -1,0 +1,141 @@
+<%- include('../partials/page-start') %>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Contact</span>
+    <h1>Let's talk about your project</h1>
+
+    <% if (success) { %>
+      <div class="form-success-banner" id="thank-you">
+        Thanks — your message has been sent. We'll get back to you shortly.
+      </div>
+    <% } %>
+
+    <div class="contact-grid">
+      <div class="contact-info-card">
+        <h3>Office</h3>
+        <ul class="contact-info-list">
+          <li><span>📍</span><span><%= site.contact.address.line1 %>, <%= site.contact.address.line2 %></span></li>
+          <li><span>📞</span><a href="tel:+<%= site.contact.phone %>">+<%= site.contact.phone %></a></li>
+          <li><span>✉️</span><a href="mailto:<%= site.contact.email %>"><%= site.contact.email %></a></li>
+          <li><span>🏢</span><span>CAC Reg. No: <%= site.contact.cac.regNo %></span></li>
+        </ul>
+        <div style="margin-top:var(--space-4);">
+          <a href="https://wa.me/<%= site.contact.phone %>" class="btn btn--whatsapp btn--block" target="_blank" rel="noopener noreferrer" data-whatsapp-track>
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3>Send us a message</h3>
+        <form action="/contact" method="POST" novalidate>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+          <!-- Honeypot field — hidden from real users via CSS, bots that fill it are rejected server-side -->
+          <div class="honeypot-field" aria-hidden="true">
+            <label for="company_website">Website</label>
+            <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input class="form-control" type="text" id="name" name="name" required maxlength="120">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input class="form-control" type="email" id="email" name="email" required maxlength="160">
+            </div>
+          </div>
+
+          <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+            <div class="form-group">
+              <label for="phone">Phone (optional)</label>
+              <input class="form-control" type="tel" id="phone" name="phone" maxlength="30">
+            </div>
+            <div class="form-group">
+              <label for="service">Service of Interest</label>
+              <select class="form-control" id="service" name="service">
+                <option value="general">General Enquiry</option>
+                <option value="construction">Construction</option>
+                <option value="fashion">Fashion</option>
+                <option value="supply">General Supply</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea class="form-control" id="message" name="message" required maxlength="3000"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--block">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stitch-line container" aria-hidden="true"></div>
+
+<section class="section section--muted">
+  <div class="container" style="max-width:760px;">
+    <div class="section__head section__head--center">
+      <span class="eyebrow">Faster Response</span>
+      <h2>Request a detailed quote</h2>
+      <p>Prefer a guided flow? Fill this out and we'll hand off straight to WhatsApp with your details pre-filled.</p>
+    </div>
+
+    <form id="quoteForm" style="background:#fff;border:1px solid var(--color-line);border-radius:var(--radius-md);padding:var(--space-5);">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="honeypot-field" aria-hidden="true">
+        <label for="qr_company_website">Website</label>
+        <input type="text" id="qr_company_website" name="company_website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+        <div class="form-group">
+          <label for="qr_name">Full Name</label>
+          <input class="form-control" type="text" id="qr_name" name="name" required maxlength="120">
+        </div>
+        <div class="form-group">
+          <label for="qr_email">Email</label>
+          <input class="form-control" type="email" id="qr_email" name="email" required maxlength="160">
+        </div>
+      </div>
+
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+        <div class="form-group">
+          <label for="qr_phone">Phone</label>
+          <input class="form-control" type="tel" id="qr_phone" name="phone" required maxlength="30">
+        </div>
+        <div class="form-group">
+          <label for="qr_service">Service Type</label>
+          <select class="form-control" id="qr_service" name="service" required>
+            <option value="construction">Construction</option>
+            <option value="fashion">Fashion</option>
+            <option value="supply">General Supply</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="qr_scope">Project Scope</label>
+        <textarea class="form-control" id="qr_scope" name="scope" required maxlength="1000" placeholder="Describe what you need built, tailored, or supplied…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="qr_budget">Budget Range (optional)</label>
+        <input class="form-control" type="text" id="qr_budget" name="budget" maxlength="60" placeholder="e.g. ₦500,000 – ₦1,000,000">
+      </div>
+
+      <button type="submit" class="btn btn--gold btn--block">Get My Quote via WhatsApp</button>
+      <p id="quoteFormError" class="form-error" style="display:none;margin-top:var(--space-3);"></p>
+    </form>
+  </div>
+</section>
+
+<script src="/js/contact.js" defer></script>
+
+<%- include('../partials/page-end') %>

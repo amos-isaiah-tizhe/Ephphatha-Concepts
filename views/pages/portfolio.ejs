@@ -1,0 +1,38 @@
+<%- include('../partials/page-start') %>
+
+<section class="section" style="padding-bottom:0;">
+  <div class="container">
+    <span class="eyebrow">Portfolio</span>
+    <h1>Our work, across every service line</h1>
+    <p style="max-width:65ch;">Browse completed and ongoing construction, fashion, and supply projects. Tap any item for details and a direct WhatsApp line to our team.</p>
+
+    <div class="gallery-filters" role="tablist" aria-label="Service category filter">
+      <button type="button" class="<%= !activeFilter ? 'active' : '' %>" data-gallery-filter="all">All</button>
+      <% Object.values(SERVICE_META).forEach(function(m) { %>
+        <button type="button" class="<%= activeFilter === m.key ? 'active' : '' %>" data-gallery-filter="<%= m.key %>"><%= m.label %></button>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:var(--space-4);">
+  <div class="container">
+    <% if (items && items.length > 0) { %>
+      <div class="gallery-grid" data-gallery-grid>
+        <% items.forEach(function(item) { %>
+          <%- include('../partials/gallery-card', { item: item }) %>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="gallery-empty">
+        <h3>No projects published yet</h3>
+        <p>Check back soon, or reach out directly to see recent work.</p>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<%- include('../partials/gallery-modal') %>
+<script src="/js/gallery.js" defer></script>
+
+<%- include('../partials/page-end') %>

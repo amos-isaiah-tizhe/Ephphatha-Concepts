@@ -1,0 +1,12 @@
+<%- include('../partials/page-start') %>
+
+<section class="section error-page">
+  <div class="container">
+    <p class="error-page__code">500</p>
+    <h1>Something went wrong</h1>
+    <p><%= typeof message !== 'undefined' ? message : 'Please try again shortly.' %></p>
+    <a href="/" class="btn btn--primary">Back to Home</a>
+  </div>
+</section>
+
+<%- include('../partials/page-end') %>

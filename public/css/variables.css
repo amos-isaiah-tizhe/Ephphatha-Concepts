@@ -1,0 +1,64 @@
+/* public/css/variables.css
+   Design tokens for Ephphatha Concepts.
+   Palette derived from the company crest (forest green + gold) and the
+   dual nature of the business: construction (blueprint) + fashion (tailoring).
+*/
+
+:root {
+  /* --- Color --- */
+  --color-forest-900: #0a2e1c;
+  --color-forest-700: #0b4228;
+  --color-forest-600: #145536;
+  --color-ink: #12201a;
+  --color-gold: #c9a227;
+  --color-gold-soft: #e4c766;
+  --color-paper: #f6f4ee;
+  --color-paper-raised: #ffffff;
+  --color-slate: #5b665f;
+  --color-slate-light: #8b958e;
+  --color-line: #d9d5c8;
+  --color-danger: #a33d2f;
+  --color-success: #2f7a4d;
+
+  /* --- Typography --- */
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  --fs-h1: clamp(2.4rem, 4vw + 1rem, 4.2rem);
+  --fs-h2: clamp(1.8rem, 2.4vw + 1rem, 2.8rem);
+  --fs-h3: clamp(1.3rem, 1.2vw + 1rem, 1.7rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-tiny: 0.75rem;
+
+  /* --- Spacing scale --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+
+  /* --- Layout --- */
+  --container-max: 1200px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-card: 0 1px 2px rgba(18, 32, 26, 0.06), 0 8px 24px rgba(18, 32, 26, 0.08);
+  --shadow-lift: 0 12px 32px rgba(18, 32, 26, 0.16);
+
+  /* --- Motion --- */
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-med: 320ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

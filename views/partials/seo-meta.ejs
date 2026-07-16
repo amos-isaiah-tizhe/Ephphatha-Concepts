@@ -1,0 +1,35 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><%= typeof title !== 'undefined' ? title : site.name %></title>
+<meta name="description" content="<%= typeof description !== 'undefined' ? description : 'Ephphatha Concepts Limited — construction, fashion, and general supply services in Nigeria.' %>">
+<meta name="theme-color" content="#0B4228">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="<%= typeof title !== 'undefined' ? title : site.name %>">
+<meta property="og:description" content="<%= typeof description !== 'undefined' ? description : 'Ephphatha Concepts Limited — construction, fashion, and general supply services in Nigeria.' %>">
+<meta property="og:url" content="<%= site.meta.baseUrl %><%= currentPath %>">
+<meta property="og:image" content="<%= site.meta.baseUrl %>/images/og-cover.svg">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<%= typeof title !== 'undefined' ? title : site.name %>">
+<meta name="twitter:description" content="<%= typeof description !== 'undefined' ? description : 'Ephphatha Concepts Limited.' %>">
+
+<link rel="canonical" href="<%= site.meta.baseUrl %><%= currentPath %>">
+
+<script type="application/ld+json" nonce="<%= cspNonce %>">
+{
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  "name": "Ephphatha Concepts Limited",
+  "url": "<%= site.meta.baseUrl %>",
+  "telephone": "+<%= site.contact.phone %>",
+  "email": "<%= site.contact.email %>",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "<%= site.contact.address.line1 %>",
+    "addressLocality": "Otukpo",
+    "addressRegion": "Benue State",
+    "addressCountry": "NG"
+  }
+}
+</script>

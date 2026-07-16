@@ -1,0 +1,50 @@
+<%- include('./_shell-start') %>
+
+<div class="admin-shell">
+  <%- include('_sidebar') %>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1>Enquiries</h1>
+    </div>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Service</th>
+          <th>Message</th>
+          <th>Status</th>
+          <th>Received</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (submissions.length === 0) { %>
+          <tr><td colspan="6">No enquiries yet.</td></tr>
+        <% } %>
+        <% submissions.forEach(function(s) { %>
+          <tr>
+            <td><%= s.name %></td>
+            <td><%= s.email %><br><small><%= s.phone || '—' %></small></td>
+            <td><%= s.service %></td>
+            <td style="max-width:320px;"><%= s.message.length > 140 ? s.message.slice(0, 140) + '…' : s.message %></td>
+            <td>
+              <form action="/admin/submissions/<%= s._id %>/status" method="POST" data-auto-submit>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <select name="status" class="form-control" style="padding:4px 8px;font-size:var(--fs-tiny);">
+                  <option value="new" <%= s.status === 'new' ? 'selected' : '' %>>New</option>
+                  <option value="contacted" <%= s.status === 'contacted' ? 'selected' : '' %>>Contacted</option>
+                  <option value="closed" <%= s.status === 'closed' ? 'selected' : '' %>>Closed</option>
+                </select>
+              </form>
+            </td>
+            <td><%= new Date(s.createdAt).toLocaleString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<%- include('./_shell-end') %>

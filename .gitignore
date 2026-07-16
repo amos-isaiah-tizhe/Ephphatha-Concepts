@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Temp uploads (multer buffer, if disk storage ever used)
+public/uploads/tmp/
+
+# Test coverage
+coverage/
+
+public/images/
+public/images/seed/
+

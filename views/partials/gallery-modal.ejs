@@ -1,0 +1,22 @@
+<div class="gallery-modal" id="galleryModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+  <div class="gallery-modal__panel">
+    <button type="button" class="gallery-modal__close" data-modal-close aria-label="Close">&times;</button>
+
+    <div class="gallery-modal__media">
+      <img data-modal-image src="" alt="">
+    </div>
+    <div class="gallery-modal__thumbs" data-modal-thumbs></div>
+
+    <div class="gallery-modal__body">
+      <div class="gallery-modal__meta">
+        <span class="gallery-card__tag" style="position:static;" data-modal-category></span>
+        <span class="gallery-card__price" data-modal-price></span>
+      </div>
+      <h3 id="modalTitle" data-modal-title></h3>
+      <p data-modal-description></p>
+      <a href="#" class="btn btn--whatsapp" target="_blank" rel="noopener noreferrer" data-modal-whatsapp data-whatsapp-track>
+        Chat on WhatsApp about this
+      </a>
+    </div>
+  </div>
+</div>

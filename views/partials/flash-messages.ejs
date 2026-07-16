@@ -1,0 +1,9 @@
+<% if (typeof errors !== 'undefined' && errors && errors.length) { %>
+  <div class="form-success-banner" style="background:#fdecec;border-color:#a33d2f;color:#a33d2f;">
+    <ul>
+      <% errors.forEach(function(err) { %>
+        <li><%= err.msg %></li>
+      <% }) %>
+    </ul>
+  </div>
+<% } %>

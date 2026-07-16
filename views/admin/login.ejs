@@ -1,0 +1,30 @@
+<%- include('./_shell-start') %>
+
+<div class="login-shell">
+  <div class="login-card">
+    <h1>Admin Login</h1>
+    <p style="color:var(--color-slate);margin-bottom:var(--space-4);">Sign in to manage the Ephphatha Concepts gallery and enquiries.</p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="form-success-banner" style="background:#fdecec;border-color:#a33d2f;color:#a33d2f;"><%= error %></div>
+    <% } %>
+
+    <form action="/admin/login" method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" type="email" id="email" name="email" required autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" type="password" id="password" name="password" required autocomplete="current-password" minlength="6">
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--block">Log In</button>
+    </form>
+  </div>
+</div>
+
+<%- include('./_shell-end') %>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include(`${viewsRoot}/partials/seo-meta`) %>
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/main.css">
+  <%- typeof extraStyles !== 'undefined' ? extraStyles : '' %>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <%- include(`${viewsRoot}/partials/header`) %>
+
+  <main id="main-content">
+    <%- body %>
+  </main>
+
+  <%- include(`${viewsRoot}/partials/whatsapp-float`) %>
+  <%- include(`${viewsRoot}/partials/footer`) %>
+
+  <script src="/js/main.js" defer></script>
+  <script src="/js/whatsapp.js" defer></script>
+  <%- typeof extraScripts !== 'undefined' ? extraScripts : '' %>
+</body>
+</html>

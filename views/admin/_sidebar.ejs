@@ -1,0 +1,13 @@
+<aside class="admin-sidebar">
+  <a href="/admin/dashboard" class="admin-sidebar__brand">Ephphatha <span style="color:var(--color-gold-soft);">Admin</span></a>
+  <nav>
+    <a href="/admin/dashboard" class="<%= currentPath === '/admin/dashboard' ? 'active' : '' %>">Dashboard</a>
+    <a href="/admin/gallery" class="<%= currentPath.startsWith('/admin/gallery') ? 'active' : '' %>">Gallery</a>
+    <a href="/admin/submissions" class="<%= currentPath === '/admin/submissions' ? 'active' : '' %>">Enquiries</a>
+    <a href="/" target="_blank" rel="noopener noreferrer">View Site ↗</a>
+  </nav>
+  <form action="/admin/logout" method="POST" class="admin-sidebar__logout">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn--outline btn--block" style="border-color:rgba(255,255,255,0.3);color:#fff;">Log Out</button>
+  </form>
+</aside>

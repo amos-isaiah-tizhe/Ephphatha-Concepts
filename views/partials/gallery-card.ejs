@@ -1,0 +1,19 @@
+<article class="gallery-card" data-gallery-card data-slug="<%= item.slug %>" data-card-category="<%= item.serviceCategory %>" data-card-subcategory="<%= item.subCategory || '' %>" tabindex="0" role="button" aria-label="View details for <%= item.title %>">
+  <div class="gallery-card__media">
+    <span class="gallery-card__tag"><%= item.subCategory || item.serviceCategory %></span>
+    <img
+      src="<%= item.images[0].url %>"
+      alt="<%= item.images[0].altText || item.title %>"
+      loading="lazy"
+      width="400" height="300"
+    >
+  </div>
+  <div class="gallery-card__body">
+    <h3><%= item.title %></h3>
+    <p class="gallery-card__desc"><%= item.description %></p>
+    <div class="gallery-card__footer">
+      <span class="gallery-card__price"><%= item.priceRange || 'Request Quote' %></span>
+      <span class="btn btn--outline btn--sm">View details</span>
+    </div>
+  </div>
+</article>

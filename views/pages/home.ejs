@@ -1,0 +1,174 @@
+<%- include('../partials/page-start') %>
+
+<section class="hero">
+  <div class="container hero__grid">
+    <div>
+      <span class="eyebrow">Construction · Fashion · General Supply</span>
+      <h1 class="hero__title">Building, styling, and supplying <span class="accent">Nigeria's next projects.</span></h1>
+      <p class="hero__lede">
+        Ephphatha Concepts Limited is a CAC-registered company delivering durable construction,
+        precision tailoring, and reliable procurement — for private clients, corporates, and government agencies.
+      </p>
+      <div class="hero__actions">
+        <a href="/portfolio" class="btn btn--gold">View Our Work</a>
+        <a href="https://wa.me/<%= site.contact.phone %>" class="btn btn--outline" style="border-color:#f2f0e6;color:#f2f0e6;" target="_blank" rel="noopener noreferrer" data-whatsapp-track>
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__title-block">
+      <dl>
+        <dt>Company</dt><dd>Ephphatha Concepts Limited</dd>
+        <dt>Reg. No</dt><dd><%= site.contact.cac.regNo %></dd>
+        <dt>Status</dt><dd>CAC Registered — Private Company Limited by Shares</dd>
+        <dt>Services</dt><dd>Construction / Fashion / Supply</dd>
+        <dt>Location</dt><dd>Otukpo, Benue State, Nigeria</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="container trust-strip__inner">
+    <span class="trust-strip__item"><strong>CAC Registered</strong> — No. <%= site.contact.cac.regNo %></span>
+    <span class="trust-strip__item"><strong>3</strong> Core Service Lines</span>
+    <span class="trust-strip__item"><strong>20,000+</strong> Principal Vendor Network</span>
+    <span class="trust-strip__item"><strong>Nationwide</strong> Client Reach</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="eyebrow">What We Do</span>
+      <h2>Three disciplines. One standard of quality.</h2>
+      <p>Every project — whether a building, a garment, or a supply order — is delivered against the same commitment to integrity, professionalism, and client satisfaction.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar-card">
+        <span class="pillar-card__index">01 / Construction</span>
+        <h3>Construction Services</h3>
+        <p>General construction, renovation, structural works, roofing, and specialized builds for residential, commercial, and public projects.</p>
+        <ul>
+          <li>General & custom building construction</li>
+          <li>Renovation & remodeling</li>
+          <li>Roofing, plumbing & painting</li>
+        </ul>
+        <a href="/services/construction" class="pillar-card__link">Explore Construction →</a>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-card__index">02 / Fashion</span>
+        <h3>Fashion Services</h3>
+        <p>Custom tailoring, corporate wear, native attire, and bulk garment production finished with quality fabrics.</p>
+        <ul>
+          <li>Custom tailoring & alterations</li>
+          <li>Corporate & native/traditional wear</li>
+          <li>Uniform & bulk clothing production</li>
+        </ul>
+        <a href="/services/fashion" class="pillar-card__link">Explore Fashion →</a>
+      </div>
+
+      <div class="pillar-card">
+        <span class="pillar-card__index">03 / Supply</span>
+        <h3>General Supply Services</h3>
+        <p>Procurement and supply of building materials, tools, electrical & plumbing materials, furniture, and merchandise.</p>
+        <ul>
+          <li>Building materials & construction tools</li>
+          <li>Electrical & plumbing materials</li>
+          <li>Furniture, fittings & general goods</li>
+        </ul>
+        <a href="/services/supply" class="pillar-card__link">Explore Supply →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="container stats-grid">
+    <div>
+      <div class="stat__num" data-counter="3">0</div>
+      <div class="stat__label">Core Service Lines</div>
+    </div>
+    <div>
+      <div class="stat__num" data-counter="20000">0</div>
+      <div class="stat__label">Principal Vendors Accessible</div>
+    </div>
+    <div>
+      <div class="stat__num" data-counter="6">0</div>
+      <div class="stat__label">Client Categories Served</div>
+    </div>
+    <div>
+      <div class="stat__num" data-counter="100">0</div>
+      <div class="stat__label">% CAC Registered & Compliant</div>
+    </div>
+  </div>
+</div>
+
+<% if (featured && featured.length > 0) { %>
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <span class="eyebrow">Recent Work</span>
+      <h2>From the gallery</h2>
+      <p>A look at recent construction, fashion, and supply work. Tap any item to see the full gallery and chat with us directly on WhatsApp.</p>
+    </div>
+
+    <div class="gallery-grid" data-gallery-grid>
+      <% featured.forEach(function(item) { %>
+        <%- include('../partials/gallery-card', { item: item }) %>
+      <% }) %>
+    </div>
+
+    <div style="text-align:center;margin-top:var(--space-5);">
+      <a href="/portfolio" class="btn btn--primary">View Full Portfolio</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<div class="stitch-line container" aria-hidden="true"></div>
+
+<section class="section section--muted">
+  <div class="container">
+    <div class="section__head section__head--center">
+      <span class="eyebrow">Testimonials</span>
+      <h2>What our clients say</h2>
+    </div>
+    <div class="testimonials">
+      <div class="testimonial-card">
+        <p class="testimonial-card__quote">"Ephphatha Concepts delivered our office renovation on time and on budget. Communication was clear throughout."</p>
+        <div class="testimonial-card__name">Private Client</div>
+        <div class="testimonial-card__role">Residential Renovation, Otukpo</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-card__quote">"The corporate wear they produced for our staff was consistent, well-fitted, and delivered ahead of schedule."</p>
+        <div class="testimonial-card__name">Corporate Client</div>
+        <div class="testimonial-card__role">Uniform Production, Jos</div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-card__quote">"Reliable supply partner — they sourced materials quickly and at competitive rates for our project."</p>
+        <div class="testimonial-card__name">Real Estate Developer</div>
+        <div class="testimonial-card__role">General Supply, Benue State</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="text-align:center;">
+    <h2>Ready to start your project?</h2>
+    <p style="max-width:50ch;margin-inline:auto;">Tell us what you need — construction, fashion, or supply — and we'll respond with a tailored quote.</p>
+    <div class="hero__actions" style="justify-content:center;">
+      <a href="/contact" class="btn btn--primary">Request a Quote</a>
+      <a href="https://wa.me/<%= site.contact.phone %>" class="btn btn--whatsapp" target="_blank" rel="noopener noreferrer" data-whatsapp-track>Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/gallery-modal') %>
+<script src="/js/gallery.js" defer></script>
+
+<%- include('../partials/page-end') %>

@@ -1,0 +1,68 @@
+<footer class="site-footer">
+  <div class="container footer__grid">
+    <div class="footer__col">
+      <img src="/images/logo-white.svg" alt="Ephphatha Concepts logo" width="56">
+      <p>Construction, fashion, and general supply services delivered with integrity, quality, and professionalism.</p>
+      <div class="footer__socials">
+        <a href="#" aria-label="Facebook">FB</a>
+        <a href="#" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="LinkedIn">IN</a>
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/services/construction">Construction</a></li>
+        <li><a href="/services/fashion">Fashion</a></li>
+        <li><a href="/services/supply">General Supply</a></li>
+        <li><a href="/portfolio">Portfolio</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <address style="font-style: normal;">
+        <%= site.contact.address.line1 %><br>
+        <%= site.contact.address.line2 %>
+      </address>
+      <p><a href="tel:+<%= site.contact.phone %>">+<%= site.contact.phone %></a></p>
+      <p><a href="mailto:<%= site.contact.email %>"><%= site.contact.email %></a></p>
+    </div>
+
+    <div class="footer__col">
+      <h4>Registration</h4>
+      <p>CAC Reg. No: <%= site.contact.cac.regNo %></p>
+      <p>TIN: <%= site.contact.cac.tin %></p>
+      <p>Registered under the Companies and Allied Matters Act, 2020.</p>
+    </div>
+  </div>
+
+  <div class="stitch-line container" aria-hidden="true"></div>
+
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <p>&copy; <%= site.meta.year %> Ephphatha Concepts Limited. All rights reserved.</p>
+
+      <!--
+        Developer attribution — every value below is sourced from environment
+        variables (DEVELOPER_NAME, DEVELOPER_URL, DEVELOPER_BRAND, BRAND_URL)
+        via utils/siteConfig.js. Nothing here is hardcoded in the template.
+      -->
+      <p class="footer__credit">
+        Website designed &amp; developed by
+        <a href="<%= site.developer.url %>" target="_blank" rel="noopener noreferrer">
+          <%= site.developer.name %>
+        </a>
+        for
+        <a href="<%= site.developer.brandUrl %>" target="_blank" rel="noopener noreferrer">
+          <%= site.developer.brand %>
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>

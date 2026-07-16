@@ -1,0 +1,51 @@
+<%- include('./_shell-start') %>
+
+<div class="admin-shell">
+  <%- include('_sidebar') %>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1 style="margin-bottom:4px;">Manage Gallery</h1>
+        <p style="margin:0;">All construction, fashion, and supply gallery items.</p>
+      </div>
+      <a href="/admin/gallery/new" class="btn btn--primary">+ Add Gallery Item</a>
+    </div>
+
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Updated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (items.length === 0) { %>
+          <tr><td colspan="6">No gallery items yet. Click "Add Gallery Item" to create one.</td></tr>
+        <% } %>
+        <% items.forEach(function(item) { %>
+          <tr>
+            <td><img class="thumb" src="<%= item.images[0] ? item.images[0].url : '' %>" alt=""></td>
+            <td><%= item.title %></td>
+            <td><%= SERVICE_META[item.serviceCategory] ? SERVICE_META[item.serviceCategory].label : item.serviceCategory %></td>
+            <td><span class="badge badge--<%= item.isPublished ? 'published' : 'draft' %>"><%= item.isPublished ? 'Published' : 'Draft' %></span></td>
+            <td><%= new Date(item.updatedAt).toLocaleDateString() %></td>
+            <td>
+              <a href="/admin/gallery/<%= item._id %>/edit" class="btn btn--outline btn--sm">Edit</a>
+              <form action="/admin/gallery/<%= item._id %>/delete" method="POST" style="display:inline;" data-confirm="Delete this gallery item permanently?">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn--sm" style="background:#fdecec;color:#a33d2f;">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </main>
+</div>
+
+<%- include('./_shell-end') %>

@@ -1,0 +1,50 @@
+<%- include('../partials/page-start') %>
+
+<section class="section" style="padding-bottom:0;">
+  <div class="container">
+    <span class="eyebrow"><%= meta.label %></span>
+    <h1><%= meta.label %></h1>
+    <p style="max-width:65ch;"><%= meta.heroDescription %></p>
+
+    <div class="gallery-filters" role="tablist" aria-label="Sub-category filter">
+      <button type="button" class="active" data-gallery-filter="all">All</button>
+      <% meta.subCategories.forEach(function(sc) { %>
+        <button type="button" data-gallery-filter="<%= sc %>"><%= sc %></button>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:var(--space-4);">
+  <div class="container">
+    <% if (items && items.length > 0) { %>
+      <div class="gallery-grid" data-gallery-grid>
+        <% items.forEach(function(item) { %>
+          <%- include('../partials/gallery-card', { item: item }) %>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <div class="gallery-empty">
+        <h3>Gallery coming soon</h3>
+        <p>We're adding project photos for this service. In the meantime, reach out and we'll share examples directly.</p>
+        <a href="https://wa.me/<%= site.contact.phone %>" class="btn btn--whatsapp" target="_blank" rel="noopener noreferrer" data-whatsapp-track>Chat on WhatsApp</a>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<section class="section section--muted" style="text-align:center;">
+  <div class="container">
+    <h2>Need a custom <%= meta.label.toLowerCase() %> quote?</h2>
+    <p style="max-width:50ch;margin-inline:auto;">Share your requirements and we'll respond with pricing and timelines.</p>
+    <div class="hero__actions" style="justify-content:center;">
+      <a href="/contact" class="btn btn--primary">Request a Quote</a>
+      <a href="https://wa.me/<%= site.contact.phone %>" class="btn btn--whatsapp" target="_blank" rel="noopener noreferrer" data-whatsapp-track>Chat on WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<%- include('../partials/gallery-modal') %>
+<script src="/js/gallery.js" defer></script>
+
+<%- include('../partials/page-end') %>

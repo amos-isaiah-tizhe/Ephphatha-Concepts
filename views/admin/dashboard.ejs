@@ -1,0 +1,65 @@
+<%- include('./_shell-start') %>
+
+<div class="admin-shell">
+  <%- include('_sidebar') %>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <div>
+        <h1 style="margin-bottom:4px;">Dashboard</h1>
+        <p style="margin:0;">Overview of gallery content and enquiries.</p>
+      </div>
+      <a href="/admin/gallery/new" class="btn btn--primary">+ Add Gallery Item</a>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__num"><%= stats.totalItems %></div>
+        <div class="admin-stat-card__label">Gallery Items</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__num"><%= stats.totalSubmissions %></div>
+        <div class="admin-stat-card__label">Total Enquiries</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__num"><%= stats.newSubmissions %></div>
+        <div class="admin-stat-card__label">New Enquiries</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__num"><%= stats.byCategory.length %></div>
+        <div class="admin-stat-card__label">Active Categories</div>
+      </div>
+    </div>
+
+    <h3>Recent Enquiries</h3>
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Service</th>
+          <th>Status</th>
+          <th>Received</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (recentSubmissions.length === 0) { %>
+          <tr><td colspan="4">No enquiries yet.</td></tr>
+        <% } %>
+        <% recentSubmissions.forEach(function(s) { %>
+          <tr>
+            <td><%= s.name %> <br><small><%= s.email %></small></td>
+            <td><%= s.service %></td>
+            <td><span class="badge badge--<%= s.status %>"><%= s.status %></span></td>
+            <td><%= new Date(s.createdAt).toLocaleDateString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div style="margin-top:var(--space-4);">
+      <a href="/admin/submissions" class="btn btn--outline">View All Enquiries →</a>
+    </div>
+  </main>
+</div>
+
+<%- include('./_shell-end') %>
