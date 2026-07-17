@@ -50,29 +50,6 @@ button { font-family: inherit; cursor: pointer; }
    A dashed divider with perpendicular tick marks — reads simultaneously as a
    tailor's tacking stitch and an architectural dimension line. This is the
    one recurring visual signature tying construction + fashion together. */
-.stitch-line {
-  position: relative;
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--color-gold) 0,
-    var(--color-gold) 6px,
-    transparent 6px,
-    transparent 14px
-  );
-  margin: var(--space-5) 0;
-}
-.stitch-line::before,
-.stitch-line::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  width: 1px;
-  height: 9px;
-  background: var(--color-gold);
-}
-.stitch-line::before { left: 0; }
-.stitch-line::after { right: 0; }
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -124,9 +101,12 @@ button { font-family: inherit; cursor: pointer; }
 .header-top__contact:hover { color: var(--color-gold-soft); }
 
 .navbar__inner { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); gap: var(--space-4); }
-.navbar__brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--color-forest-900); }
+.navbar__toggle { order: 0; }
+.navbar__brand { order: 1; display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--color-forest-900); }
 .navbar__brand em { font-style: normal; color: var(--color-gold); }
-.navbar__menu { display: flex; align-items: center; gap: var(--space-4); font-weight: 500; }
+.navbar__menu { order: 2; display: flex; align-items: center; gap: var(--space-4); font-weight: 500; }
+.navbar-cta { order: 3; display: inline-flex; align-items: center; gap: 8px; }
+.navbar-cta__icon { flex-shrink: 0; }
 .navbar__menu a { padding: var(--space-2) 0; position: relative; }
 .navbar__menu a.active,
 .navbar__menu a:hover { color: var(--color-forest-700); }
@@ -147,6 +127,22 @@ button { font-family: inherit; cursor: pointer; }
 
 .navbar__toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; padding: 8px; }
 .navbar__toggle span { width: 24px; height: 2px; background: var(--color-ink); display: block; }
+
+/* Backdrop shown behind the mobile slide-in menu; tapping it closes the menu. */
+.nav-overlay {
+  position: fixed; inset: 0; z-index: 55;
+  background: rgba(10, 46, 28, 0.55);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--duration-med) var(--ease-standard);
+}
+.nav-overlay.is-open { opacity: 1; visibility: visible; }
+
+.navbar__menu-header { display: none; } /* only shown inside the mobile slide-in panel */
+.navbar__menu-close {
+  background: none; border: none; font-size: 1.8rem; line-height: 1; color: var(--color-ink);
+  padding: 4px 10px; cursor: pointer; border-radius: var(--radius-sm);
+}
+.navbar__menu-close:hover { background: var(--color-paper); }
 
 /* ===== Hero ===== */
 .hero { position: relative; background: var(--color-forest-900); color: #f2f0e6; overflow: hidden; padding: var(--space-7) 0 var(--space-6); }
@@ -266,9 +262,10 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .whatsapp-float:hover { transform: scale(1.08); }
 
 /* ===== Footer ===== */
-.site-footer { background: var(--color-forest-900); color: #cdd8d0; }
+.site-footer { background: var(--color-forest-900); color: #cdd8d0; padding: 0.85rem; }
 .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1.2fr 1fr; gap: var(--space-5); padding: var(--space-6) 0 var(--space-5); }
 .footer__col h4 { color: #fff; font-family: var(--font-body); font-size: var(--fs-small); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-3); }
+.footer__col img { max-width: 160px; margin-bottom: var(--space-3); }
 .footer__col ul li { padding: 4px 0; }
 .footer__col a:hover { color: var(--color-gold-soft); }
 .footer__col p { color: #a9b6ae; font-size: var(--fs-small); }
@@ -306,22 +303,44 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 @media (max-width: 720px) {
   .container { padding: 0 var(--space-3); }
 
-  /* -- Header / nav -- */
-  .header-top__inner { flex-direction: column; align-items: flex-start; gap: 4px; padding: var(--space-2) var(--space-3); }
-  .navbar__inner { padding: var(--space-2) var(--space-3); }
-  .navbar__brand span { font-size: 1.05rem; }
+/* -- Header / nav --
+     Layout matches the reference design: hamburger (left) — brand (center)
+     — icon-only WhatsApp button (right). The contact-details top bar is
+     hidden on mobile (it's redundant with the WhatsApp icon + floating
+     button, and was wrapping awkwardly at narrow widths); it still shows
+     on tablet/desktop where there's room for it. */
+  .header-top { display: none; }
+
+  .navbar__inner {
+    display: grid; grid-template-columns: 44px 1fr 44px; align-items: center;
+    gap: var(--space-2); padding: var(--space-2) var(--space-3);
+  }
+  .navbar__toggle { grid-column: 1; justify-self: start; }
+  .navbar__brand { grid-column: 2; justify-self: center; }
+  .navbar__brand span { font-size: 1rem; }
+  .navbar__brand img { margin: 0.5rem 0; }
+  .navbar-cta { grid-column: 3; justify-self: end; }
+  .navbar__toggle { display: flex; }
+
+  /* Icon-only WhatsApp button on mobile — label hidden, compact circle. */
+  .navbar-cta {
+    width: 40px; height: 40px; padding: 0; border-radius: 50%;
+    justify-content: center;
+  }
+  .navbar-cta__label { display: none; }
 
   .navbar__menu {
-    position: fixed; top: 0; right: 0; height: 100vh; width: 82vw; max-width: 320px;
+    position: fixed; top: 0; right: 0; z-index: 60; height: 100vh; width: 82vw; max-width: 320px;
     background: #fff; flex-direction: column; align-items: stretch; gap: 0;
-    padding: 80px var(--space-4) var(--space-4); overflow-y: auto;
+    padding: var(--space-3) var(--space-4) var(--space-4); overflow-y: auto;
     transform: translateX(100%); transition: transform var(--duration-med) var(--ease-standard);
     box-shadow: var(--shadow-lift);
   }
   .navbar__menu.is-open { transform: translateX(0); }
   .navbar__menu li { width: 100%; }
   .navbar__menu > li > a { padding: 14px 4px; font-size: 1.05rem; border-bottom: 1px solid var(--color-line); }
-  .navbar__toggle { display: flex; }
+
+  .navbar__menu-header { display: flex; justify-content: flex-end; margin-bottom: var(--space-2); }
 
   /* Services submenu: hover doesn't work on touch devices, so on mobile it
      is shown inline (always expanded) under its parent link instead of as
@@ -334,7 +353,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   }
   .dropdown li a { padding: 12px 4px 12px 20px; font-size: 0.95rem; border-bottom: 1px solid var(--color-line); }
 
-  .btn--whatsapp.navbar-cta { display: none; } /* the floating WhatsApp button already covers this on mobile */
+  .btn--whatsapp.navbar-cta { display: flex; } /* the floating WhatsApp button already covers this on mobile */
 
   /* -- Hero -- */
   .hero__title-block { padding: var(--space-3); }
@@ -362,8 +381,10 @@ textarea.form-control { min-height: 140px; resize: vertical; }
   .footer__grid { grid-template-columns: 1fr; gap: var(--space-4); padding: var(--space-5) 0 var(--space-4); }
   .footer__bottom-inner { flex-direction: column; text-align: center; }
 
-  /* -- Floating WhatsApp button: keep clear of thumb-reach edge padding -- */
-  .whatsapp-float { bottom: 16px; right: 16px; width: 52px; height: 52px; }
+  /* -- Floating WhatsApp button: hidden on mobile — the nav bar's icon
+     button (top of page, always visible) now covers this need without a
+     second redundant floating affordance. -- */
+  .whatsapp-float { display: none; }
 }
 
 /* ---------- Small phone (≤480px) ---------- */

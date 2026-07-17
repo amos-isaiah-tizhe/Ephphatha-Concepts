@@ -2,22 +2,54 @@
 (function () {
   'use strict';
 
-  // ---- Mobile nav toggle ----
+  // ---- Mobile nav toggle (hamburger + overlay + close button + Escape key) ----
   const navToggle = document.getElementById('navToggle');
   const navMenu = document.getElementById('navMenu');
+  const navOverlay = document.getElementById('navOverlay');
+  const navMenuClose = document.getElementById('navMenuClose');
 
   if (navToggle && navMenu) {
+    function openMenu() {
+      navMenu.classList.add('is-open');
+      if (navOverlay) navOverlay.classList.add('is-open');
+      navToggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      navMenu.classList.remove('is-open');
+      if (navOverlay) navOverlay.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
     navToggle.addEventListener('click', () => {
-      const isOpen = navMenu.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
+      const isOpen = navMenu.classList.contains('is-open');
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
 
-    // Close menu when a link is clicked (mobile)
+    if (navMenuClose) {
+      navMenuClose.addEventListener('click', closeMenu);
+    }
+
+    // Tapping the dimmed backdrop (empty space outside the menu) closes it.
+    if (navOverlay) {
+      navOverlay.addEventListener('click', closeMenu);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navMenu.classList.contains('is-open')) {
+        closeMenu();
+      }
+    });
+
+    // Close menu when a nav link is clicked (mobile)
     navMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('is-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', closeMenu);
     });
   }
 
