@@ -1,6 +1,7 @@
 <%- include('./_shell-start') %>
 
 <div class="admin-shell">
+  <%- include('_mobile-topbar') %>
   <%- include('_sidebar') %>
 
   <main class="admin-main">
@@ -12,6 +13,7 @@
       <a href="/admin/gallery/new" class="btn btn--primary">+ Add Gallery Item</a>
     </div>
 
+   <div class="table-responsive">
     <table class="admin-table">
       <thead>
         <tr>
@@ -43,8 +45,9 @@
             </td>
           </tr>
         <% }) %>
-      </tbody>
+   </tbody>
     </table>
+    </div>
   </main>
 </div>
 

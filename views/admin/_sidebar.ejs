@@ -1,4 +1,7 @@
-<aside class="admin-sidebar">
+<aside class="admin-sidebar" id="adminSidebar">
+  <div class="admin-sidebar__close-row">
+    <button class="admin-sidebar__close" id="adminSidebarClose" type="button" aria-label="Close menu">&times;</button>
+  </div>
   <a href="/admin/dashboard" class="admin-sidebar__brand">Ephphatha <span style="color:var(--color-gold-soft);">Admin</span></a>
   <nav>
     <a href="/admin/dashboard" class="<%= currentPath === '/admin/dashboard' ? 'active' : '' %>">Dashboard</a>

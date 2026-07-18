@@ -1,21 +1,36 @@
 <%- include('../partials/page-start') %>
 
-<section class="section">
-  <div class="container">
-    <span class="eyebrow">About Us</span>
-    <h1>Built on integrity. Delivered with precision.</h1>
-    <p style="max-width:65ch;">
-      Ephphatha Concepts Limited is a dynamic, professionally managed Nigerian company specializing
-      in construction, building design, renovation, fashion, and general supply services. Registered
-      with the Corporate Affairs Commission of Nigeria (Reg. No. <%= site.contact.cac.regNo %>),
-      we deliver high-quality residential, commercial, and industrial projects with a strong
-      commitment to excellence, durability, safety, and client satisfaction.
-    </p>
-    <p style="max-width:65ch;">
-      Our team consists of skilled engineers, builders, designers, project managers, craftsmen,
-      and fashion professionals dedicated to delivering projects that meet modern standards and
-      client expectations.
-    </p>
+<section class="section section--about">
+  <div class="container about__grid">
+    <div class="about__content">
+      <span class="eyebrow">About Us</span>
+
+      <h1 class="about__title">
+        Built on integrity.
+        <span class="accent">Delivered with precision.</span>
+      </h1>
+
+      <p class="about__lede">
+        Ephphatha Concepts Limited is a dynamic, professionally managed Nigerian company specializing
+        in construction, building design, renovation, fashion, and general supply services. </p> <p class="about__lede">Registered
+        with the Corporate Affairs Commission of Nigeria (Reg. No.
+        <%= site.contact.cac.regNo %>), we deliver high-quality residential,
+        commercial, and industrial projects with a strong commitment to
+        excellence, durability, safety, and client satisfaction.
+      </p>
+
+      <p class="about__text">
+        Our team consists of skilled engineers, builders, designers, project
+        managers, craftsmen, and fashion professionals dedicated to delivering
+        projects that meet modern standards and client expectations.
+      </p>
+    </div>
+
+    <div class="about__image">
+      <img
+        src="./images/ephphatha-team.png"
+        alt="Construction professionals working on a project in Nigeria">
+    </div>
   </div>
 </section>
 

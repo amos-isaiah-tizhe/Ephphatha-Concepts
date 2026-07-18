@@ -1,6 +1,7 @@
 <%- include('./_shell-start') %>
 
 <div class="admin-shell">
+  <%- include('_mobile-topbar') %>
   <%- include('_sidebar') %>
 
   <main class="admin-main">
@@ -8,6 +9,7 @@
       <h1>Enquiries</h1>
     </div>
 
+    <div class="table-responsive">
     <table class="admin-table">
       <thead>
         <tr>
@@ -42,8 +44,9 @@
             <td><%= new Date(s.createdAt).toLocaleString() %></td>
           </tr>
         <% }) %>
-      </tbody>
+     </tbody>
     </table>
+    </div>
   </main>
 </div>
 

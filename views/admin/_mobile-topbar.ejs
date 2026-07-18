@@ -1,0 +1,22 @@
+<!--
+  Mobile-only top bar shown above the admin content area on narrow screens
+  (hidden on desktop via CSS, where the full sidebar is always visible).
+  Tapping the hamburger slides the sidebar (views/admin/_sidebar.ejs) in
+  as an off-canvas drawer; the overlay below dims the page and closes the
+  drawer when tapped.
+-->
+<div class="admin-mobile-topbar">
+  <button
+    class="admin-mobile-topbar__toggle"
+    id="adminSidebarToggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="adminSidebar"
+    aria-label="Open menu"
+  >
+    <span></span><span></span><span></span>
+  </button>
+  <span class="admin-mobile-topbar__brand">Ephphatha <em>Admin</em></span>
+</div>
+
+<div class="nav-overlay" id="adminSidebarOverlay"></div>

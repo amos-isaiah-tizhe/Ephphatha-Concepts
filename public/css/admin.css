@@ -2,19 +2,31 @@
 
 .admin-shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
 .admin-sidebar { background: var(--color-forest-900); color: #cdd8d0; padding: var(--space-4); }
+.admin-sidebar__close-row { display: none; } /* only shown inside the mobile drawer — see 880px tier below */
 .admin-sidebar__brand { font-family: var(--font-display); color: #fff; font-size: 1.2rem; margin-bottom: var(--space-5); display: block; }
 .admin-sidebar nav a { display: block; padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 4px; font-size: var(--fs-small); }
 .admin-sidebar nav a:hover,
 .admin-sidebar nav a.active { background: rgba(201,162,39,0.15); color: var(--color-gold-soft); }
 .admin-sidebar__logout { margin-top: var(--space-5); }
 
-.admin-main { padding: var(--space-5); background: var(--color-paper); }
-.admin-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-5); }
+/* Mobile-only top bar (hamburger + brand) shown above the content area on
+   narrow screens. Hidden entirely on desktop, where the sidebar is always
+   visible and this bar would be redundant. */
+.admin-mobile-topbar { display: none; }
+
+.admin-main { padding: var(--space-5); background: var(--color-paper); min-width: 0; }
+.admin-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-5); gap: var(--space-3); }
 
 .admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); margin-bottom: var(--space-5); }
 .admin-stat-card { background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius-md); padding: var(--space-4); }
 .admin-stat-card__num { font-family: var(--font-display); font-size: 2rem; color: var(--color-forest-700); }
 .admin-stat-card__label { font-size: var(--fs-small); color: var(--color-slate); }
+
+/* Wrap any <table class="admin-table"> in <div class="table-responsive"> to
+   allow horizontal scrolling instead of breaking the page layout on narrow
+   screens — the table itself keeps its natural column widths. */
+.table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-responsive .admin-table { min-width: 640px; }
 
 .admin-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius-md); overflow: hidden; }
 .admin-table th, .admin-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--color-line); font-size: var(--fs-small); }
@@ -38,10 +50,59 @@
 .login-card { background: #fff; border-radius: var(--radius-md); padding: var(--space-6) var(--space-5); max-width: 400px; width: 100%; }
 .login-card h1 { font-size: 1.5rem; }
 
-@media (max-width: 880px) {
-  .admin-shell { grid-template-columns: 1fr; }
-  .admin-sidebar { display: flex; align-items: center; justify-content: space-between; }
-  .admin-sidebar nav { display: flex; gap: 8px; }
-  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+/* ---------- Mobile drawer sidebar (≤880px) ---------- */
+@media (max-width: 768px) {
+  .admin-shell { grid-template-columns: 1fr; align-content: start; }
+
+  .admin-mobile-topbar {
+    display: flex; align-items: center; gap: var(--space-3);
+    background: var(--color-forest-900); color: #fff;
+    padding: var(--space-3); position: sticky; top: 0; z-index: 70;
+  }
+  .admin-mobile-topbar__toggle {
+    background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 6px; cursor: pointer;
+  }
+  .admin-mobile-topbar__toggle span { width: 22px; height: 2px; background: #fff; display: block; }
+  .admin-mobile-topbar__brand { font-family: var(--font-display); font-size: 1.05rem; }
+  .admin-mobile-topbar__brand em { font-style: normal; color: var(--color-gold-soft); }
+
+  /* Sidebar becomes an off-canvas drawer: hidden off the left edge of the
+     screen by default, slides in over the page (not squeezed into a row)
+     when .is-open is toggled by admin.js. */
+  .admin-sidebar {
+    position: fixed; top: 0; left: 0; z-index: 80; height: 100vh; width: 82vw; max-width: 300px;
+    display: block; overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform var(--duration-med) var(--ease-standard);
+    box-shadow: var(--shadow-lift);
+  }
+  .admin-sidebar.is-open { transform: translateX(0); }
+  .admin-sidebar__close-row { display: flex; justify-content: flex-end; margin-bottom: var(--space-3); }
+  .admin-sidebar__close {
+    background: none; border: none; font-size: 1.8rem; line-height: 1; color: #fff;
+    padding: 4px 10px; cursor: pointer; border-radius: var(--radius-sm);
+  }
+  .admin-sidebar__close:hover { background: rgba(255,255,255,0.1); }
+
+  .admin-main { padding: var(--space-4); }
+  .admin-topbar { flex-direction: column; align-items: stretch; gap: var(--space-3); }
+  .admin-topbar > a.btn { align-self: flex-start; }
+
+  .admin-stats { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
   .admin-form .form-row { grid-template-columns: 1fr; }
+}
+
+/* ---------- Small phone (≤480px) ---------- */
+@media (max-width: 480px) {
+  .admin-main { padding: var(--space-3); }
+  .admin-stats { grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+  .admin-stat-card { padding: var(--space-3); }
+  .admin-stat-card__num { font-size: 1.6rem; }
+
+  .admin-form { padding: var(--space-3); }
+  .admin-form__images img { width: 64px; height: 64px; }
+
+  .admin-topbar > a.btn { align-self: stretch; text-align: center; }
+
+  .login-card { padding: var(--space-5) var(--space-4); }
 }
